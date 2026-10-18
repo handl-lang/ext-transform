@@ -420,15 +420,6 @@ dependencies = [
  "handl-kit-data-canonical",
  "handl-language",
  "handl-platform",
- "handl-plugin-engine-exec",
- "handl-plugin-engine-exec-bytecode",
- "handl-plugin-engine-exec-cranelift",
- "handl-plugin-engine-exec-tree-walk",
- "handl-plugin-engine-lex-pattern",
- "handl-plugin-engine-parse",
- "handl-plugin-engine-parse-pratt",
- "handl-plugin-engine-typecheck",
- "handl-plugin-engine-typecheck-handl",
  "handl-plugin-ext-diag",
  "handl-plugin-ffi",
  "handl-plugin-lib-char-native",
@@ -446,6 +437,15 @@ dependencies = [
  "handl-plugin-lib-tag",
  "handl-plugin-module",
  "handl-runtime",
+ "hnl-engine-exec",
+ "hnl-engine-exec-bytecode",
+ "hnl-engine-exec-cranelift",
+ "hnl-engine-exec-tree-walk",
+ "hnl-engine-lex-pattern",
+ "hnl-engine-parse",
+ "hnl-engine-parse-pratt",
+ "hnl-engine-typecheck",
+ "hnl-engine-typecheck-handl",
  "serde",
  "serde_json",
  "toml",
@@ -470,9 +470,9 @@ version = "0.1.0"
 dependencies = [
  "handl-kit-data",
  "handl-language",
- "handl-plugin-engine-transform",
  "handl-plugin-ext-diag",
  "handl-runtime",
+ "hnl-engine-transform",
  "serde_json",
  "serde_yaml",
 ]
@@ -481,7 +481,7 @@ dependencies = [
 name = "handl-language"
 version = "0.1.0"
 dependencies = [
- "plugin-engine",
+ "hnl-engine",
  "serde",
  "serde_json",
  "thiserror",
@@ -516,6 +516,10 @@ dependencies = [
  "handl-value",
  "serde_json",
 ]
+
+[[package]]
+name = "handl-lib-char"
+version = "0.1.0"
 
 [[package]]
 name = "handl-lib-cmp"
@@ -636,6 +640,7 @@ dependencies = [
 [[package]]
 name = "handl-lib-ops"
 version = "0.1.0"
+source = "git+https://github.com/handl-lang/kernel?branch=main#fbea49a8eca40b71440345f0506c97ffe230d35a"
 dependencies = [
  "handl-platform",
  "serde_json",
@@ -659,10 +664,17 @@ dependencies = [
 [[package]]
 name = "handl-lib-prim"
 version = "0.1.0"
+source = "git+https://github.com/handl-lang/kernel?branch=main#fbea49a8eca40b71440345f0506c97ffe230d35a"
 
 [[package]]
 name = "handl-lib-prim-handl"
 version = "0.1.0"
+source = "git+https://github.com/handl-lang/kernel?branch=main#fbea49a8eca40b71440345f0506c97ffe230d35a"
+
+[[package]]
+name = "handl-lib-rand-c"
+version = "0.1.0"
+source = "git+https://github.com/handl-lang/lib-rand-c?branch=main#9148c572b0c9b36a7659bfeaa476625887713efb"
 
 [[package]]
 name = "handl-lib-result"
@@ -699,6 +711,11 @@ dependencies = [
  "serde_json",
  "tar",
 ]
+
+[[package]]
+name = "handl-lib-time-c"
+version = "0.1.0"
+source = "git+https://github.com/handl-lang/lib-time-c?branch=main#cc0aa896e1a745503f032cf9c1142059c1c95751"
 
 [[package]]
 name = "handl-lib-transform"
@@ -745,6 +762,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "handl-lib-utils"
+version = "0.1.0"
+
+[[package]]
 name = "handl-platform"
 version = "0.1.0"
 dependencies = [
@@ -753,168 +774,6 @@ dependencies = [
  "serde_json",
  "thiserror",
  "toml",
-]
-
-[[package]]
-name = "handl-plugin-engine-exec"
-version = "0.1.0"
-dependencies = [
- "handl-language",
- "handl-platform",
- "handl-value",
- "rustc-hash",
- "serde_json",
-]
-
-[[package]]
-name = "handl-plugin-engine-exec-bytecode"
-version = "0.1.0"
-dependencies = [
- "handl-language",
- "handl-platform",
- "handl-plugin-engine-exec",
- "handl-plugin-engine-exec-tree-walk",
- "handl-plugin-engine-transform",
- "handl-plugin-engine-transform-rewrite",
- "handl-runtime",
- "handl-value",
- "plugin-engine",
- "rustc-hash",
- "serde_json",
-]
-
-[[package]]
-name = "handl-plugin-engine-exec-cranelift"
-version = "0.1.0"
-dependencies = [
- "cranelift",
- "cranelift-jit",
- "cranelift-module",
- "cranelift-object",
- "handl-language",
- "handl-platform",
- "handl-plugin-engine-exec",
- "handl-plugin-engine-exec-tree-walk",
- "handl-plugin-ffi",
- "handl-runtime",
- "handl-value",
- "plugin-engine",
- "rustc-hash",
- "serde_json",
-]
-
-[[package]]
-name = "handl-plugin-engine-exec-tree-walk"
-version = "0.1.0"
-dependencies = [
- "handl-language",
- "handl-platform",
- "handl-plugin-engine-exec",
- "handl-value",
- "plugin-engine",
- "rustc-hash",
- "serde_json",
-]
-
-[[package]]
-name = "handl-plugin-engine-fmt"
-version = "0.1.0"
-dependencies = [
- "handl-language",
- "serde_json",
-]
-
-[[package]]
-name = "handl-plugin-engine-lex"
-version = "0.1.0"
-dependencies = [
- "handl-language",
- "serde_json",
-]
-
-[[package]]
-name = "handl-plugin-engine-lex-pattern"
-version = "0.1.0"
-dependencies = [
- "handl-language",
- "handl-plugin-engine-lex",
-]
-
-[[package]]
-name = "handl-plugin-engine-lint"
-version = "0.1.0"
-dependencies = [
- "handl-language",
- "handl-plugin-engine-lex-pattern",
- "handl-plugin-engine-parse",
- "handl-plugin-engine-parse-pratt",
- "handl-plugin-engine-transform-rewrite",
- "handl-plugin-ext-diag",
- "serde_json",
-]
-
-[[package]]
-name = "handl-plugin-engine-parse"
-version = "0.1.0"
-dependencies = [
- "handl-language",
- "serde_json",
-]
-
-[[package]]
-name = "handl-plugin-engine-parse-pratt"
-version = "0.1.0"
-dependencies = [
- "handl-language",
- "handl-plugin-engine-parse",
- "serde_json",
-]
-
-[[package]]
-name = "handl-plugin-engine-transform"
-version = "0.1.0"
-dependencies = [
- "handl-language",
- "handl-plugin-ext-diag",
- "serde_json",
-]
-
-[[package]]
-name = "handl-plugin-engine-transform-rewrite"
-version = "0.1.0"
-dependencies = [
- "handl-language",
- "handl-plugin-engine-transform",
- "serde_json",
-]
-
-[[package]]
-name = "handl-plugin-engine-typecheck"
-version = "0.1.0"
-dependencies = [
- "handl-language",
- "handl-platform",
- "handl-plugin-engine-lex-pattern",
- "handl-plugin-engine-parse",
- "handl-plugin-engine-parse-pratt",
- "handl-plugin-ext-diag",
- "serde_json",
-]
-
-[[package]]
-name = "handl-plugin-engine-typecheck-handl"
-version = "0.1.0"
-dependencies = [
- "handl-language",
- "handl-platform",
- "handl-plugin-engine-exec",
- "handl-plugin-engine-exec-tree-walk",
- "handl-plugin-engine-typecheck",
- "handl-plugin-lib-handl",
- "handl-plugin-lib-stdlib",
- "handl-plugin-lib-tag",
- "plugin-engine",
- "serde_json",
 ]
 
 [[package]]
@@ -945,6 +804,7 @@ dependencies = [
 name = "handl-plugin-lib-char-native"
 version = "0.1.0"
 dependencies = [
+ "handl-lib-char",
  "handl-platform",
  "serde_json",
 ]
@@ -970,18 +830,18 @@ dependencies = [
  "handl-lib-dedent",
  "handl-lib-str-handl",
  "handl-platform",
- "handl-plugin-engine-exec",
- "handl-plugin-engine-exec-bytecode",
- "handl-plugin-engine-exec-tree-walk",
- "handl-plugin-engine-lex-pattern",
- "handl-plugin-engine-lint",
- "handl-plugin-engine-parse-pratt",
- "handl-plugin-engine-transform",
  "handl-plugin-lib-char-native",
  "handl-plugin-module",
  "handl-runtime",
  "handl-value",
- "plugin-engine",
+ "hnl-engine",
+ "hnl-engine-exec",
+ "hnl-engine-exec-bytecode",
+ "hnl-engine-exec-tree-walk",
+ "hnl-engine-lex-pattern",
+ "hnl-engine-lint",
+ "hnl-engine-parse-pratt",
+ "hnl-engine-transform",
  "serde_json",
 ]
 
@@ -1112,6 +972,7 @@ dependencies = [
  "handl-lib-arrow-iter",
  "handl-lib-base64",
  "handl-lib-bytes",
+ "handl-lib-char",
  "handl-lib-cmp",
  "handl-lib-collections",
  "handl-lib-combinators",
@@ -1131,16 +992,19 @@ dependencies = [
  "handl-lib-parse",
  "handl-lib-prim",
  "handl-lib-prim-handl",
+ "handl-lib-rand-c",
  "handl-lib-result",
  "handl-lib-serialize",
  "handl-lib-stats",
  "handl-lib-tar",
+ "handl-lib-time-c",
  "handl-lib-transform",
  "handl-lib-type",
  "handl-lib-unicode",
  "handl-lib-unicode-c",
  "handl-lib-url-rfc",
  "handl-lib-url-whatwg",
+ "handl-lib-utils",
  "handl-platform",
  "handl-plugin-lib-handl",
  "handl-plugin-module",
@@ -1179,13 +1043,13 @@ dependencies = [
  "handl-kit-arrow-lower",
  "handl-language",
  "handl-platform",
- "handl-plugin-engine-exec",
- "handl-plugin-engine-lex",
- "handl-plugin-engine-parse",
- "handl-plugin-engine-transform-rewrite",
- "handl-plugin-engine-typecheck",
  "handl-value",
- "plugin-engine",
+ "hnl-engine",
+ "hnl-engine-exec",
+ "hnl-engine-lex",
+ "hnl-engine-parse",
+ "hnl-engine-transform-rewrite",
+ "hnl-engine-typecheck",
  "rustc-hash",
  "serde",
  "serde_json",
@@ -1227,19 +1091,191 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 
 [[package]]
+name = "hnl-engine"
+version = "0.1.0"
+dependencies = [
+ "handl-value",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-exec"
+version = "0.1.0"
+dependencies = [
+ "handl-language",
+ "handl-platform",
+ "handl-value",
+ "rustc-hash",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-exec-bytecode"
+version = "0.1.0"
+dependencies = [
+ "handl-language",
+ "handl-platform",
+ "handl-runtime",
+ "handl-value",
+ "hnl-engine",
+ "hnl-engine-exec",
+ "hnl-engine-exec-tree-walk",
+ "hnl-engine-transform",
+ "hnl-engine-transform-rewrite",
+ "rustc-hash",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-exec-cranelift"
+version = "0.1.0"
+dependencies = [
+ "cranelift",
+ "cranelift-jit",
+ "cranelift-module",
+ "cranelift-object",
+ "handl-language",
+ "handl-platform",
+ "handl-plugin-ffi",
+ "handl-runtime",
+ "handl-value",
+ "hnl-engine",
+ "hnl-engine-exec",
+ "hnl-engine-exec-tree-walk",
+ "rustc-hash",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-exec-tree-walk"
+version = "0.1.0"
+dependencies = [
+ "handl-language",
+ "handl-platform",
+ "handl-value",
+ "hnl-engine",
+ "hnl-engine-exec",
+ "rustc-hash",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-fmt"
+version = "0.1.0"
+dependencies = [
+ "handl-language",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-lex"
+version = "0.1.0"
+dependencies = [
+ "handl-language",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-lex-pattern"
+version = "0.1.0"
+dependencies = [
+ "handl-language",
+ "hnl-engine-lex",
+]
+
+[[package]]
+name = "hnl-engine-lint"
+version = "0.1.0"
+dependencies = [
+ "handl-language",
+ "handl-plugin-ext-diag",
+ "hnl-engine-lex-pattern",
+ "hnl-engine-parse",
+ "hnl-engine-parse-pratt",
+ "hnl-engine-transform-rewrite",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-parse"
+version = "0.1.0"
+dependencies = [
+ "handl-language",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-parse-pratt"
+version = "0.1.0"
+dependencies = [
+ "handl-language",
+ "hnl-engine-parse",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-transform"
+version = "0.1.0"
+dependencies = [
+ "handl-language",
+ "handl-plugin-ext-diag",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-transform-rewrite"
+version = "0.1.0"
+dependencies = [
+ "handl-language",
+ "hnl-engine-transform",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-typecheck"
+version = "0.1.0"
+dependencies = [
+ "handl-language",
+ "handl-platform",
+ "handl-plugin-ext-diag",
+ "hnl-engine-lex-pattern",
+ "hnl-engine-parse",
+ "hnl-engine-parse-pratt",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-typecheck-handl"
+version = "0.1.0"
+dependencies = [
+ "handl-language",
+ "handl-lib-collections",
+ "handl-platform",
+ "handl-plugin-lib-handl",
+ "handl-plugin-lib-stdlib",
+ "handl-plugin-lib-tag",
+ "hnl-engine",
+ "hnl-engine-exec",
+ "hnl-engine-exec-tree-walk",
+ "hnl-engine-typecheck",
+ "serde_json",
+]
+
+[[package]]
 name = "hnl-ext-transform"
 version = "0.1.0"
 dependencies = [
  "handl-ext",
  "handl-kit-canonical",
  "handl-language",
- "handl-plugin-engine-fmt",
- "handl-plugin-engine-lex-pattern",
- "handl-plugin-engine-parse",
- "handl-plugin-engine-parse-pratt",
- "handl-plugin-engine-transform",
- "handl-plugin-engine-transform-rewrite",
  "handl-plugin-ext-diag",
+ "hnl-engine-fmt",
+ "hnl-engine-lex-pattern",
+ "hnl-engine-parse",
+ "hnl-engine-parse-pratt",
+ "hnl-engine-transform",
+ "hnl-engine-transform-rewrite",
  "serde_json",
 ]
 
@@ -1465,15 +1501,6 @@ name = "percent-encoding"
 version = "2.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9b4f627cb1b25917193a259e49bdad08f671f8d9708acfd5fe0a8c1455d87220"
-
-[[package]]
-name = "plugin-engine"
-version = "0.1.0"
-dependencies = [
- "handl-value",
- "serde",
- "serde_json",
-]
 
 [[package]]
 name = "potential_utf"
@@ -2232,6 +2259,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "29666d0abbfad1e3dc4dcf6144730dd3a3ab225bbbdac83319345b1b44ccfc1b"
 
 [[patch.unused]]
+name = "handl-lib-prim"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-lib-ops"
+version = "0.1.0"
+
+[[patch.unused]]
 name = "handl-bench"
 version = "0.1.0"
 
@@ -2261,10 +2296,6 @@ version = "0.1.0"
 
 [[patch.unused]]
 name = "handl-plugin-compile"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-engine-test"
 version = "0.1.0"
 
 [[patch.unused]]
@@ -2337,4 +2368,12 @@ version = "0.1.0"
 
 [[patch.unused]]
 name = "handl-test-utils"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-lib-prim-handl"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "hnl-engine-test"
 version = "0.1.0"
