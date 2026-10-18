@@ -124,6 +124,9 @@ handl-lib-base64 = { path = "../lib-base64" }
 [patch."https://github.com/handl-lang/lib-bytes"]
 handl-lib-bytes = { path = "../lib-bytes" }
 
+[patch."https://github.com/handl-lang/lib-char"]
+handl-lib-char = { path = "../lib-char" }
+
 [patch."https://github.com/handl-lang/lib-cmp"]
 handl-lib-cmp = { path = "../lib-cmp" }
 
@@ -162,6 +165,9 @@ handl-lib-intl-c = { path = "../lib-intl-c" }
 
 [patch."https://github.com/handl-lang/lib-json"]
 handl-lib-json = { path = "../lib-json" }
+
+[patch."https://github.com/handl-lang/lib-utils"]
+handl-lib-utils = { path = "../lib-utils" }
 
 [patch."https://github.com/handl-lang/lib-mood"]
 handl-lib-mood = { path = "../lib-mood" }
