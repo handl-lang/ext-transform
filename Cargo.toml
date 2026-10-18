@@ -21,7 +21,7 @@ hnl-engine-parse = { git = "https://github.com/handl-lang/engine-parse", branch 
 hnl-engine-parse-pratt = { git = "https://github.com/handl-lang/engine-parse-pratt", branch = "main" }
 hnl-engine-transform = { git = "https://github.com/handl-lang/engine-transform", branch = "main" }
 hnl-engine-transform-rewrite = { git = "https://github.com/handl-lang/engine-transform-rewrite", branch = "main" }
-handl-plugin-ext-diag = { git = "https://github.com/handl-lang/platform", branch = "main" }
+handl-plugin-ext-diag = { git = "https://github.com/handl-lang/host", branch = "main" }
 serde_json = "1"
 
 # ADR-0128 §Resolution: local development resolves sibling-repo deps from
@@ -285,41 +285,41 @@ handl-lib-utils = { path = "../lib-utils" }
 
 [patch."https://github.com/handl-lang/otlp"]
 
-[patch."https://github.com/handl-lang/platform"]
-handl-bench = { path = "../platform/crates/bench" }
-handl-ext-tests = { path = "../platform/crates/ext-tests" }
-handl-host-tooling = { path = "../platform/crates/host-tooling" }
-handl-kit-arrow-lower = { path = "../platform/crates/handl-kit-arrow-lower" }
-handl-kit-data = { path = "../platform/crates/handl-kit-data" }
-handl-platform = { path = "../platform/crates/platform" }
-handl-platform-tests = { path = "../platform/crates/platform-tests" }
-handl-plugin-applier = { path = "../platform/crates/plugin-applier" }
-handl-plugin-applier-bootstrap = { path = "../platform/crates/plugin-applier-bootstrap" }
-handl-plugin-applier-default = { path = "../platform/crates/plugin-applier-default" }
-handl-plugin-compile = { path = "../platform/crates/plugin-compile" }
-handl-plugin-exec-cache = { path = "../platform/crates/plugin-exec-cache" }
-handl-plugin-ext-compile = { path = "../platform/crates/plugin-ext-compile" }
-handl-plugin-ext-detect = { path = "../platform/crates/plugin-ext-detect" }
-handl-plugin-ext-diag = { path = "../platform/crates/plugin-ext-diag" }
-handl-plugin-ext-eval = { path = "../platform/crates/plugin-ext-eval" }
-handl-plugin-ext-fmt = { path = "../platform/crates/plugin-ext-fmt" }
-handl-plugin-ext-kit = { path = "../platform/crates/plugin-ext-kit" }
-handl-plugin-ext-lint = { path = "../platform/crates/plugin-ext-lint" }
-handl-plugin-ext-plugin = { path = "../platform/crates/plugin-ext-plugin" }
-handl-plugin-ext-refinement = { path = "../platform/crates/plugin-ext-refinement" }
-handl-plugin-ext-sdkgen = { path = "../platform/crates/plugin-ext-sdkgen" }
-handl-plugin-ext-test = { path = "../platform/crates/plugin-ext-test" }
-handl-plugin-ext-typecheck = { path = "../platform/crates/plugin-ext-typecheck" }
-handl-plugin-lib-handl = { path = "../platform/crates/plugin-lib-handl" }
-handl-plugin-lib-scheduler = { path = "../platform/crates/plugin-lib-scheduler" }
-handl-plugin-lib-tag = { path = "../platform/crates/plugin-lib-tag" }
-handl-plugin-load = { path = "../platform/crates/plugin-load" }
-handl-plugin-loader-native = { path = "../platform/crates/plugin-loader-native" }
-handl-plugin-module = { path = "../platform/crates/plugin-module" }
-handl-plugin-sdkgen = { path = "../platform/crates/plugin-sdkgen" }
+[patch."https://github.com/handl-lang/host"]
+handl-bench = { path = "../host/crates/bench" }
+handl-ext-tests = { path = "../host/crates/ext-tests" }
+handl-host-tooling = { path = "../host/crates/host-tooling" }
+handl-kit-arrow-lower = { path = "../host/crates/handl-kit-arrow-lower" }
+handl-kit-data = { path = "../host/crates/handl-kit-data" }
+handl-platform = { path = "../host/crates/platform" }
+handl-platform-tests = { path = "../host/crates/platform-tests" }
+handl-plugin-applier = { path = "../host/crates/plugin-applier" }
+handl-plugin-applier-bootstrap = { path = "../host/crates/plugin-applier-bootstrap" }
+handl-plugin-applier-default = { path = "../host/crates/plugin-applier-default" }
+handl-plugin-compile = { path = "../host/crates/plugin-compile" }
+handl-plugin-exec-cache = { path = "../host/crates/plugin-exec-cache" }
+handl-plugin-ext-compile = { path = "../host/crates/plugin-ext-compile" }
+handl-plugin-ext-detect = { path = "../host/crates/plugin-ext-detect" }
+handl-plugin-ext-diag = { path = "../host/crates/plugin-ext-diag" }
+handl-plugin-ext-eval = { path = "../host/crates/plugin-ext-eval" }
+handl-plugin-ext-fmt = { path = "../host/crates/plugin-ext-fmt" }
+handl-plugin-ext-kit = { path = "../host/crates/plugin-ext-kit" }
+handl-plugin-ext-lint = { path = "../host/crates/plugin-ext-lint" }
+handl-plugin-ext-plugin = { path = "../host/crates/plugin-ext-plugin" }
+handl-plugin-ext-refinement = { path = "../host/crates/plugin-ext-refinement" }
+handl-plugin-ext-sdkgen = { path = "../host/crates/plugin-ext-sdkgen" }
+handl-plugin-ext-test = { path = "../host/crates/plugin-ext-test" }
+handl-plugin-ext-typecheck = { path = "../host/crates/plugin-ext-typecheck" }
+handl-plugin-lib-handl = { path = "../host/crates/plugin-lib-handl" }
+handl-plugin-lib-scheduler = { path = "../host/crates/plugin-lib-scheduler" }
+handl-plugin-lib-tag = { path = "../host/crates/plugin-lib-tag" }
+handl-plugin-load = { path = "../host/crates/plugin-load" }
+handl-plugin-loader-native = { path = "../host/crates/plugin-loader-native" }
+handl-plugin-module = { path = "../host/crates/plugin-module" }
+handl-plugin-sdkgen = { path = "../host/crates/plugin-sdkgen" }
 handl-plugin-sdkgen-emitter-file = { path = "../sdkgen-file" }
-handl-runtime = { path = "../platform/crates/handl-runtime" }
-handl-test-utils = { path = "../platform/crates/handl-test-utils" }
+handl-runtime = { path = "../host/crates/handl-runtime" }
+handl-test-utils = { path = "../host/crates/handl-test-utils" }
 
 [patch."https://github.com/handl-lang/stdlib"]
 handl-plugin-lib-stdlib = { path = "../stdlib/crates/plugin-lib-stdlib" }
