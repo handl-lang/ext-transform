@@ -13,7 +13,7 @@
 use std::collections::{HashMap, HashSet};
 use std::sync::Arc;
 
-use handl_kit_canonical::Kit;
+use handl_kit_prelude::Kit;
 use handl_language::ast::ARENA_REF_PAYLOAD_KEYS;
 use handl_language::{Ast, AstNode, AstRef, LangError, Language};
 use hnl_engine_fmt::FormatEngine;

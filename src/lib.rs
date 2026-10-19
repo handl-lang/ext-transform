@@ -25,7 +25,7 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use handl_ext::{ExtRequest, ExtResponse, ExtensionManifest};
-use handl_kit_canonical::Kit;
+use handl_kit_prelude::Kit;
 use handl_language::LangError;
 use serde_json::json;
 
