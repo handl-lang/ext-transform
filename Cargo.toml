@@ -122,6 +122,12 @@ handl-plugin-lib-crypto = { path = "../lib-crypto" }
 
 
 
+# lib-encoding's Rust shell was dropped upstream (ADR-0161) but
+# handl-lib-hex still git-deps it on `branch = "main"` — patch to
+# kernel's vendored last-shelled rev until the dep is removed upstream.
+[patch."https://github.com/handl-lang/lib-encoding"]
+handl-lib-encoding = { path = "../kernel/vendor/handl-lib-encoding" }
+
 [patch."https://github.com/handl-lang/lib-error"]
 handl-lib-error = { path = "../kernel/crates/error" }
 
