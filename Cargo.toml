@@ -245,9 +245,6 @@ handl-lib-comb = { path = "../lib-comb" }
 [patch."https://github.com/handl-lang/lib-desugar"]
 handl-lib-desugar = { path = "../lib-desugar" }
 
-[patch."https://github.com/handl-lang/lib-ffi"]
-handl-lib-ffi = { path = "../lib-ffi" }
-
 
 [patch."https://github.com/handl-lang/lib-loader"]
 handl-lib-loader = { path = "../lib-loader" }
@@ -269,5 +266,3 @@ handl-plugin-lib-serialize-yaml-c = { path = "../lib-serialize-yaml-c" }
 [patch."https://github.com/handl-lang/lib-simplex"]
 handl-lib-simplex = { path = "../lib-simplex" }
 
-[patch."https://github.com/handl-lang/lib-test"]
-handl-lib-test = { path = "../lib-test" }
