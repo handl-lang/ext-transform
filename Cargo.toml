@@ -129,9 +129,6 @@ handl-lib-encoding = { path = "../kernel/vendor/handl-lib-encoding" }
 [patch."https://github.com/handl-lang/lib-error"]
 handl-lib-error = { path = "../lib-error" }
 
-[patch."https://github.com/handl-lang/lib-hello"]
-handl-lib-hello = { path = "../lib-hello" }
-
 
 
 
@@ -271,9 +268,6 @@ handl-plugin-lib-serialize-yaml-c = { path = "../lib-serialize-yaml-c" }
 
 [patch."https://github.com/handl-lang/lib-simplex"]
 handl-lib-simplex = { path = "../lib-simplex" }
-
-[patch."https://github.com/handl-lang/lib-tag"]
-handl-lib-tag = { path = "../lib-tag" }
 
 [patch."https://github.com/handl-lang/lib-test"]
 handl-lib-test = { path = "../lib-test" }
