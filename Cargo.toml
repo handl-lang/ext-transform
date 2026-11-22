@@ -122,18 +122,12 @@ handl-plugin-lib-crypto = { path = "../lib-crypto" }
 # lib-encoding's Rust shell was dropped upstream (ADR-0161) but
 # handl-lib-hex still git-deps it on `branch = "main"` — patch to
 # kernel's vendored last-shelled rev until the dep is removed upstream.
-[patch."https://github.com/handl-lang/lib-encoding"]
-handl-lib-encoding = { path = "../kernel/vendor/handl-lib-encoding" }
-
 
 [patch."https://github.com/handl-lang/lib-error"]
 handl-lib-error = { path = "../lib-error" }
 
 
 
-
-[patch."https://github.com/handl-lang/lib-ip"]
-handl-lib-ip = { path = "../lib-ip" }
 
 
 [patch."https://github.com/handl-lang/lib-kv"]
@@ -188,9 +182,6 @@ handl-lib-prim-handl = { path = "../kernel/crates/prim-handl" }
 handl-lib-serialize = { path = "../lib-serialize" }
 
 
-[patch."https://github.com/handl-lang/lib-str-handl"]
-handl-lib-str-handl = { path = "../lib-str-handl" }
-
 
 [patch."https://github.com/handl-lang/lib-transform"]
 handl-lib-transform = { path = "../lib-transform" }
@@ -242,18 +233,9 @@ handl-runtime = { path = "../host/crates/handl-runtime" }
 [patch."https://github.com/handl-lang/lib-comb"]
 handl-lib-comb = { path = "../lib-comb" }
 
-[patch."https://github.com/handl-lang/lib-desugar"]
-handl-lib-desugar = { path = "../lib-desugar" }
-
-
-[patch."https://github.com/handl-lang/lib-loader"]
-handl-lib-loader = { path = "../lib-loader" }
 
 [patch."https://github.com/handl-lang/lib-otlp-c"]
 handl-plugin-lib-otlp-c = { path = "../lib-otlp-c" }
-
-[patch."https://github.com/handl-lang/lib-perlin"]
-handl-lib-perlin = { path = "../lib-perlin" }
 
 
 
@@ -262,7 +244,4 @@ handl-plugin-lib-serialize-toml-c = { path = "../lib-serialize-toml-c" }
 
 [patch."https://github.com/handl-lang/lib-serialize-yaml-c"]
 handl-plugin-lib-serialize-yaml-c = { path = "../lib-serialize-yaml-c" }
-
-[patch."https://github.com/handl-lang/lib-simplex"]
-handl-lib-simplex = { path = "../lib-simplex" }
 
