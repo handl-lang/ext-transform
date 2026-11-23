@@ -22,12 +22,12 @@ crate-type = ["cdylib", "rlib"]
 handl-ext = { git = "https://github.com/handl-lang/kernel", branch = "main" }
 handl-kit-prelude = { git = "https://github.com/handl-lang/host", branch = "main" }
 handl-language = { git = "https://github.com/handl-lang/kernel", branch = "main" }
-hnl-engine-fmt = { git = "https://github.com/handl-lang/engine-fmt", branch = "main" }
-hnl-engine-lex-pattern = { git = "https://github.com/handl-lang/engine-lex-pattern", branch = "main" }
-hnl-engine-parse = { git = "https://github.com/handl-lang/engine-parse", branch = "main" }
-hnl-engine-parse-pratt = { git = "https://github.com/handl-lang/engine-parse-pratt", branch = "main" }
-hnl-engine-transform = { git = "https://github.com/handl-lang/engine-transform", branch = "main" }
-hnl-engine-transform-rewrite = { git = "https://github.com/handl-lang/engine-transform-rewrite", branch = "main" }
+hnl-tool-fmt = { git = "https://github.com/handl-lang/tool-fmt", branch = "main" }
+hnl-tool-lex-pattern = { git = "https://github.com/handl-lang/tool-lex-pattern", branch = "main" }
+hnl-tool-parse = { git = "https://github.com/handl-lang/tool-parse", branch = "main" }
+hnl-tool-parse-pratt = { git = "https://github.com/handl-lang/tool-parse-pratt", branch = "main" }
+hnl-tool-transform = { git = "https://github.com/handl-lang/tool-transform", branch = "main" }
+hnl-tool-transform-rewrite = { git = "https://github.com/handl-lang/tool-transform-rewrite", branch = "main" }
 handl-plugin-ext-diag = { git = "https://github.com/handl-lang/host", branch = "main" }
 serde_json = "1"
 
@@ -51,5 +51,5 @@ handl-kit-eqsat = { path = "../host/crates/handl-kit-eqsat" }
 handl-kit-mlopt = { path = "../host/crates/kit-mlopt" }
 hnl-ext-mlopt = { path = "../host/crates/hnl-ext-mlopt" }
 
-[patch."https://github.com/handl-lang/engine-test"]
-handl-kit-test = { path = "../engine-test/crates/kit-test" }
+[patch."https://github.com/handl-lang/tool-test"]
+handl-kit-test = { path = "../tool-test/crates/kit-test" }

@@ -16,11 +16,11 @@ use std::sync::Arc;
 use handl_kit_prelude::Kit;
 use handl_language::ast::ARENA_REF_PAYLOAD_KEYS;
 use handl_language::{Ast, AstNode, AstRef, LangError, Language};
-use hnl_engine_fmt::FormatEngine;
-use hnl_engine_parse::{ParserEngine, ParserRequest};
-use hnl_engine_parse_pratt::PrattEngine;
-use hnl_engine_transform::native::{NativeRewrite, NativeRewriteRegistry, RewriteCtx};
-use hnl_engine_transform_rewrite::RewriteEngine;
+use hnl_tool_fmt::FormatEngine;
+use hnl_tool_parse::{ParserEngine, ParserRequest};
+use hnl_tool_parse_pratt::PrattEngine;
+use hnl_tool_transform::native::{NativeRewrite, NativeRewriteRegistry, RewriteCtx};
+use hnl_tool_transform_rewrite::RewriteEngine;
 use serde_json::{Value, json};
 
 /// The dimension a `~[N]~>` rule fires at.
@@ -985,7 +985,7 @@ struct StatementInfo {
 fn parse_raw(lang: &Language, src: &str) -> Result<Vec<(Ast, StatementInfo)>, LangError> {
     let mut asts = Vec::new();
     for info in split_statements(src) {
-        let tokens = hnl_engine_lex_pattern::lex(lang, &info.source)?;
+        let tokens = hnl_tool_lex_pattern::lex(lang, &info.source)?;
         if tokens.as_slice().is_empty() {
             continue;
         }

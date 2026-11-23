@@ -1,6 +1,6 @@
 //! `hnl-ext-transform` — the `transform` extension for `hnl` (ADR-0149).
 //!
-//! The transform machinery lives in `hnl-engine-transform-rewrite`
+//! The transform machinery lives in `hnl-tool-transform-rewrite`
 //! (`RewriteEngine`, ADR-0094) over the language's declarative
 //! `lang.transforms` rules; this crate is the *packaging*: it exports the
 //! ADR-0149 ABI (`handl_ext_manifest` / `handl_ext_dispatch` /
@@ -274,9 +274,9 @@ fn run(args: &[String], cwd: &Path) -> ExtResponse {
     // `transforms.yaml` rule with `rule: !Native "handl:<mod>.<fn>"` errors
     // as "unknown native" — the adapter is the production seam.
     let handl_natives = Arc::new(kit.handl_rewrite_adapter().with_fallback(Arc::new(
-        hnl_engine_transform_rewrite::native::desugar_native_registry(),
+        hnl_tool_transform_rewrite::native::desugar_native_registry(),
     )));
-    let engine = hnl_engine_transform_rewrite::RewriteEngine::new()
+    let engine = hnl_tool_transform_rewrite::RewriteEngine::new()
         .with_desugar_and_handl_natives(handl_natives);
 
     if t.plan {
@@ -348,7 +348,7 @@ fn run(args: &[String], cwd: &Path) -> ExtResponse {
                 }
                 let changed: Vec<handl_language::AstRef> =
                     res.trace.rewrites.iter().map(|r| r.to).collect();
-                let emitter = match hnl_engine_fmt::PreserveEmitter::new(
+                let emitter = match hnl_tool_fmt::PreserveEmitter::new(
                     &src, &res.ast, res.root, &changed,
                 ) {
                     Ok(e) => e,
@@ -479,16 +479,16 @@ fn transform_parse_raw(
     lang: &handl_language::Language,
     src: &str,
 ) -> Result<Vec<(handl_language::Ast, StatementInfo)>, LangError> {
-    use hnl_engine_parse::ParserEngine;
+    use hnl_tool_parse::ParserEngine;
 
     let mut asts = Vec::new();
     for info in split_statements(src) {
-        let tokens = hnl_engine_lex_pattern::lex(lang, &info.source)?;
+        let tokens = hnl_tool_lex_pattern::lex(lang, &info.source)?;
         if tokens.as_slice().is_empty() {
             continue;
         }
-        let req = hnl_engine_parse::ParserRequest::new(tokens);
-        let mut ast = hnl_engine_parse_pratt::PrattEngine::new().parse(lang, &req)?;
+        let req = hnl_tool_parse::ParserRequest::new(tokens);
+        let mut ast = hnl_tool_parse_pratt::PrattEngine::new().parse(lang, &req)?;
         if !ast.is_empty() {
             offset_spans(&mut ast, info.start)?;
             asts.push((ast, info));
