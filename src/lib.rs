@@ -178,13 +178,14 @@ fn run(args: &[String], cwd: &Path) -> ExtResponse {
     // The first positional ends in `.hnl` and exists, so route to the
     // prototype categorical rewrites rather than the named-pass engine. The
     // driver prints to the process streams directly (shared with the host).
-    if let (Some(rules_path), Some(prog_path)) = (&t.pass, &t.file) {
-        if rules_path.ends_with(".hnl") && prog_path.ends_with(".hnl") {
-            // Paths as given: the extension shares the host's process CWD
-            // (`req.cwd`), and error messages print the literal argument.
-            let c = transform_categorical::run(rules_path, prog_path);
-            return code(c, out);
-        }
+    if let (Some(rules_path), Some(prog_path)) = (&t.pass, &t.file)
+        && rules_path.ends_with(".hnl")
+        && prog_path.ends_with(".hnl")
+    {
+        // Paths as given: the extension shares the host's process CWD
+        // (`req.cwd`), and error messages print the literal argument.
+        let c = transform_categorical::run(rules_path, prog_path);
+        return code(c, out);
     }
 
     if t.emit != "tree" && t.emit != "json" && t.emit != "source" {
@@ -318,7 +319,7 @@ fn run(args: &[String], cwd: &Path) -> ExtResponse {
         let res = if t.pipeline.is_some() {
             engine.run_pipeline(lang, ast, root, &pass_refs)
         } else {
-            engine.run_pass(lang, ast, root, &pass_refs[0])
+            engine.run_pass(lang, ast, root, pass_refs[0])
         };
         let res = match res {
             Ok(o) => o,

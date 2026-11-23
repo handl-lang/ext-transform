@@ -32,7 +32,7 @@ cargo run --manifest-path xtask/Cargo.toml -- gate   # fmt → clippy → test �
 ```
 
 `xtask/` provides the gate tasks (`fmt`, `clippy`, `test`, `doc`, `check`,
-`gate`); `ci.sh` is the same gate entry for the bupha shell runner. The crate
+`gate`); `workflows/gate.yaml` is the per-push gate — the `handl-gates` bundle's rust campaign (fmt → clippy → test → doc), run by bupha/the fleet runner via `peregrin campaign run`. The crate
 builds a `cdylib` + `rlib`; `cargo test` links the `rlib` statically.
 
 ```sh

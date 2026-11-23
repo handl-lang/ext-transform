@@ -17,7 +17,6 @@ use handl_kit_prelude::Kit;
 use handl_language::ast::ARENA_REF_PAYLOAD_KEYS;
 use handl_language::{Ast, AstNode, AstRef, LangError, Language};
 use hnl_engine_fmt::FormatEngine;
-use hnl_engine_lex_pattern;
 use hnl_engine_parse::{ParserEngine, ParserRequest};
 use hnl_engine_parse_pratt::PrattEngine;
 use hnl_engine_transform::native::{NativeRewrite, NativeRewriteRegistry, RewriteCtx};
@@ -141,10 +140,10 @@ pub fn bound_names(ast: &Ast, lang: &Language) -> HashSet<String> {
             bound.insert(name.to_string());
         }
         if node.kind == "stmt.import" {
-            if let Some(a) = node.payload.get("alias").and_then(|v| v.as_str()) {
-                if !a.is_empty() {
-                    bound.insert(a.to_string());
-                }
+            if let Some(a) = node.payload.get("alias").and_then(|v| v.as_str())
+                && !a.is_empty()
+            {
+                bound.insert(a.to_string());
             }
             match node.payload.get("names") {
                 Some(Value::Array(items)) => {
@@ -170,10 +169,10 @@ pub fn bound_names(ast: &Ast, lang: &Language) -> HashSet<String> {
                 _ => {}
             }
             for c in child_refs(node) {
-                if let Some(n) = ast.get(c) {
-                    if let Some(name) = var_name(n) {
-                        bound.insert(name);
-                    }
+                if let Some(n) = ast.get(c)
+                    && let Some(name) = var_name(n)
+                {
+                    bound.insert(name);
                 }
             }
         }
@@ -187,29 +186,25 @@ pub fn bound_names(ast: &Ast, lang: &Language) -> HashSet<String> {
             .ok()
             .flatten()
             .is_some();
-        if has_target && has_value {
-            if let Some(t) = child_ref(node, lang, "target") {
-                if let Some(tn) = ast.get(AstRef::new(t)) {
-                    if let Some(name) = target_name(ast, lang, tn) {
+        if has_target
+            && has_value
+            && let Some(t) = child_ref(node, lang, "target")
+            && let Some(tn) = ast.get(AstRef::new(t))
+        {
+            if let Some(name) = target_name(ast, lang, tn) {
+                bound.insert(name);
+            }
+            // A generic binding `f<D>` scopes its dimension
+            // parameters over the value — they are bound names,
+            // not pattern metavariables.
+            if let Some(args_pos) = lang.child_role_index(&tn.kind, "args").ok().flatten()
+                && let Some(children) = tn.payload.get("children").and_then(|c| c.as_array())
+            {
+                for arg in children.iter().skip(args_pos) {
+                    if let Some(an) = arg.as_u64().and_then(|i| ast.get(AstRef::new(i as usize)))
+                        && let Some(name) = var_name(an)
+                    {
                         bound.insert(name);
-                    }
-                    // A generic binding `f<D>` scopes its dimension
-                    // parameters over the value — they are bound names,
-                    // not pattern metavariables.
-                    if let Some(args_pos) = lang.child_role_index(&tn.kind, "args").ok().flatten() {
-                        if let Some(children) =
-                            tn.payload.get("children").and_then(|c| c.as_array())
-                        {
-                            for arg in children.iter().skip(args_pos) {
-                                if let Some(an) =
-                                    arg.as_u64().and_then(|i| ast.get(AstRef::new(i as usize)))
-                                {
-                                    if let Some(name) = var_name(an) {
-                                        bound.insert(name);
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
             }
@@ -227,14 +222,12 @@ fn target_name(ast: &Ast, lang: &Language, node: &AstNode) -> Option<String> {
     }
     let children = node.payload.get("children")?.as_array()?;
     for role in ["target", "subject", "body"] {
-        if let Some(pos) = lang.child_role_index(&node.kind, role).ok().flatten() {
-            if let Some(raw) = children.get(pos).and_then(|v| v.as_u64()) {
-                if let Some(child) = ast.get(AstRef::new(raw as usize)) {
-                    if let Some(name) = target_name(ast, lang, child) {
-                        return Some(name);
-                    }
-                }
-            }
+        if let Some(pos) = lang.child_role_index(&node.kind, role).ok().flatten()
+            && let Some(raw) = children.get(pos).and_then(|v| v.as_u64())
+            && let Some(child) = ast.get(AstRef::new(raw as usize))
+            && let Some(name) = target_name(ast, lang, child)
+        {
+            return Some(name);
         }
     }
     None
@@ -371,27 +364,26 @@ fn collect_at(
     rules: &mut Vec<Rule>,
 ) {
     let Some(node) = ast.get(r) else { return };
-    if is_arrow_kind(lang, &node.kind) {
-        if let (Some(src), Some(dim), Some(tgt)) = (
+    if is_arrow_kind(lang, &node.kind)
+        && let (Some(src), Some(dim), Some(tgt)) = (
             child_ref(node, lang, "source"),
             child_ref(node, lang, "dim"),
             child_ref(node, lang, "target"),
-        ) {
-            if let Some(dim) = rule_dim(ast, AstRef::new(dim), consts) {
-                let source = unwrap_paren(ast, AstRef::new(src), lang);
-                let target = unwrap_paren(ast, AstRef::new(tgt), lang);
-                let mut metavars = HashSet::new();
-                collect_metavars(ast, source, bound, &mut metavars);
-                collect_metavars(ast, target, bound, &mut metavars);
-                rules.push(Rule {
-                    source_ast: Arc::new(ast.clone()),
-                    source,
-                    target,
-                    dim,
-                    metavars,
-                });
-            }
-        }
+        )
+        && let Some(dim) = rule_dim(ast, AstRef::new(dim), consts)
+    {
+        let source = unwrap_paren(ast, AstRef::new(src), lang);
+        let target = unwrap_paren(ast, AstRef::new(tgt), lang);
+        let mut metavars = HashSet::new();
+        collect_metavars(ast, source, bound, &mut metavars);
+        collect_metavars(ast, target, bound, &mut metavars);
+        rules.push(Rule {
+            source_ast: Arc::new(ast.clone()),
+            source,
+            target,
+            dim,
+            metavars,
+        });
     }
     for c in child_refs(node) {
         collect_at(ast, c, bound, consts, lang, rules);
@@ -457,14 +449,12 @@ pub fn dim_env(ast: &Ast, lang: &Language) -> HashMap<String, u64> {
                 }
             } else {
                 let v = unwrap_paren(ast, AstRef::new(v), lang);
-                if let Some(vn) = ast.get(v) {
-                    if is_arrow_kind(lang, &vn.kind) {
-                        if let Some(dim) = child_ref(vn, lang, "dim") {
-                            if let Some(RuleDim::Fixed(k)) = rule_dim(ast, AstRef::new(dim), &env) {
-                                env.insert(name, k);
-                            }
-                        }
-                    }
+                if let Some(vn) = ast.get(v)
+                    && is_arrow_kind(lang, &vn.kind)
+                    && let Some(dim) = child_ref(vn, lang, "dim")
+                    && let Some(RuleDim::Fixed(k)) = rule_dim(ast, AstRef::new(dim), &env)
+                {
+                    env.insert(name, k);
                 }
             }
         }
@@ -531,11 +521,11 @@ fn unwrap_paren(ast: &Ast, r: AstRef, _lang: &Language) -> AstRef {
         if node.kind != "paren" {
             break;
         }
-        if let Some(children) = node.payload.get("children").and_then(|c| c.as_array()) {
-            if let Some(first) = children.first().and_then(|v| v.as_u64()) {
-                cur = AstRef::new(first as usize);
-                continue;
-            }
+        if let Some(children) = node.payload.get("children").and_then(|c| c.as_array())
+            && let Some(first) = children.first().and_then(|v| v.as_u64())
+        {
+            cur = AstRef::new(first as usize);
+            continue;
         }
         break;
     }
@@ -600,15 +590,15 @@ fn flatten_flow(ast: &Ast, root: AstRef, lang: &Language) -> Vec<usize> {
     if node.kind != "flow" {
         return vec![root.index()];
     }
-    if let Some(children) = node.payload.get("children").and_then(|c| c.as_array()) {
-        if let (Some(l), Some(r)) = (
-            children.get(0).and_then(|v| v.as_u64()),
+    if let Some(children) = node.payload.get("children").and_then(|c| c.as_array())
+        && let (Some(l), Some(r)) = (
+            children.first().and_then(|v| v.as_u64()),
             children.get(1).and_then(|v| v.as_u64()),
-        ) {
-            let mut res = flatten_flow(ast, AstRef::new(l as usize), lang);
-            res.extend(flatten_flow(ast, AstRef::new(r as usize), lang));
-            return res;
-        }
+        )
+    {
+        let mut res = flatten_flow(ast, AstRef::new(l as usize), lang);
+        res.extend(flatten_flow(ast, AstRef::new(r as usize), lang));
+        return res;
     }
     vec![root.index()]
 }
@@ -644,10 +634,10 @@ fn apply_rules_to_chain(
                 let slice = &cur[start..start + src_flat.len()];
                 // A `~[k]~>` rule rewrites (k-1)-cells; a `~[N]~>`
                 // (dimension variable) rule fires at every dimension.
-                if let RuleDim::Fixed(k) = rule.dim {
-                    if cell_dim(out, AstRef::new(slice[0]), lang, consts) != Some(k - 1) {
-                        continue;
-                    }
+                if let RuleDim::Fixed(k) = rule.dim
+                    && cell_dim(out, AstRef::new(slice[0]), lang, consts) != Some(k - 1)
+                {
+                    continue;
                 }
                 let mut bindings = HashMap::new();
                 let mut ok = true;
@@ -709,24 +699,24 @@ fn match_ast(
     // A pattern metavariable binds the matched term on first use and
     // must match the same term structurally on later uses (`f >>> f`
     // requires both sides equal).
-    if let Some(name) = var_name(an) {
-        if metavars.contains(&name) {
-            return match bindings.get(&name) {
-                Some(&bound) => match_ast(
-                    b_ast,
-                    bound,
-                    b_ast,
-                    b,
-                    lang,
-                    &HashSet::new(),
-                    &mut Bindings::new(),
-                ),
-                None => {
-                    bindings.insert(name, b);
-                    Ok(true)
-                }
-            };
-        }
+    if let Some(name) = var_name(an)
+        && metavars.contains(&name)
+    {
+        return match bindings.get(&name) {
+            Some(&bound) => match_ast(
+                b_ast,
+                bound,
+                b_ast,
+                b,
+                lang,
+                &HashSet::new(),
+                &mut Bindings::new(),
+            ),
+            None => {
+                bindings.insert(name, b);
+                Ok(true)
+            }
+        };
     }
     let bn = match b_ast.get(b) {
         Some(n) => n,
@@ -786,6 +776,7 @@ fn match_payload(
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 fn match_object_value(
     a_ast: &Ast,
     key: &str,
@@ -882,10 +873,10 @@ fn copy_subst(
     let node = src
         .get(r)
         .ok_or_else(|| LangError::engine("copy_subst: bad ref"))?;
-    if let Some(name) = var_name(node) {
-        if let Some(&bound) = bindings.get(&name) {
-            return copy_within(bound, out);
-        }
+    if let Some(name) = var_name(node)
+        && let Some(&bound) = bindings.get(&name)
+    {
+        return copy_within(bound, out);
     }
     let mut new_node = node.clone();
     if let Some(children) = node
