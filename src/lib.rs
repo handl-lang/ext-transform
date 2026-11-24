@@ -348,19 +348,18 @@ fn run(args: &[String], cwd: &Path) -> ExtResponse {
                 }
                 let changed: Vec<handl_language::AstRef> =
                     res.trace.rewrites.iter().map(|r| r.to).collect();
-                let emitter = match hnl_tool_fmt::PreserveEmitter::new(
-                    &src, &res.ast, res.root, &changed,
-                ) {
-                    Ok(e) => e,
-                    Err(e) => {
-                        out.err(format!(
-                            "transform: {file}: emit failed for statement {}: {e}",
-                            n + 1
-                        ));
-                        had_error = true;
-                        continue;
-                    }
-                };
+                let emitter =
+                    match hnl_tool_fmt::PreserveEmitter::new(&src, &res.ast, res.root, &changed) {
+                        Ok(e) => e,
+                        Err(e) => {
+                            out.err(format!(
+                                "transform: {file}: emit failed for statement {}: {e}",
+                                n + 1
+                            ));
+                            had_error = true;
+                            continue;
+                        }
+                    };
                 match emitter.format(lang, &res.ast, res.root) {
                     Ok(s) => source_parts.push(s),
                     Err(e) => {
