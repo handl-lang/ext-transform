@@ -699,7 +699,7 @@ mod tests {
     fn unknown_pass_lists_known_passes() {
         let dir = tmpdir("unknown-pass");
         let file = dir.join("p.hnl");
-        std::fs::write(&file, "x = 1;").unwrap();
+        std::fs::write(&file, "x := 1;").unwrap();
         let res = run(
             &["bogus-pass".into(), file.to_string_lossy().into_owned()],
             &dir,
